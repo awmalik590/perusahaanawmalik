@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Profil</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <style>
+        .background-image {
+            background-image: url('http://3.bp.blogspot.com/-4d5f5QguFSQ/UM_lndWTO4I/AAAAAAAAAGU/wAjzuMVJDd8/s1600/Copy+of+DSC09834+Gedung-gedung+Perkantoran+di+Jl.+Thamrin%252C+Jakarta+by+Sahat+Simarmata.JPG');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .scrollable {
+  max-height: 300px; /* Sesuaikan tinggi area */
+  overflow-y: auto;  /* Aktifkan scroll secara vertikal */
+  padding: 10px;     /* Tambahkan padding opsional */
+  border: 1px solid #ccc; /* Opsional: Berikan border */
+}
+
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen back background-image">
+    <div id="profileDetails" class="p-6 bg-white rounded-lg shadow-lg max-w-lg">
+        <!-- Detail profil akan dimuat di sini -->
+    </div>
+    <script>
+        // Ambil parameter ID dari URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const profileId = urlParams.get('id');
+
+        // Ambil data profil dari localStorage
+        const profiles = JSON.parse(localStorage.getItem('profiles')) || [];
+
+        // Tampilkan detail profil berdasarkan ID
+        const profileDetailsContainer = document.getElementById('profileDetails');
+        if (profileId !== null && profiles[profileId]) {
+            const profile = profiles[profileId];
+            profileDetailsContainer.innerHTML = `
+                <div class="flex items-center mb-4">
+                    <div class="w-32 h-32 rounded-full overflow-hidden border-2 border-blue-500">
+                        <img src="${profile.image}" alt="Profile picture of ${profile.name}" class="w-full h-full object-cover">
+                    </div>
+                    <div class="ml-4">
+                        <h2 class="text-2xl font-bold text-blue-600">${profile.name}</h2>
+                        <p class="text-xl text-gray-600">${profile.role}</p>
+                    </div>
+                </div>
+                <p class="mb-2"><strong>Email:</strong> ${profile.email}</p>
+                <p class="mb-2"><strong>Phone:</strong> ${profile.phone}</p>
+                <p class="mb-2"><strong>Address:</strong> ${profile.address}</p>
+                <p class="mb-2"><strong>Birthday:</strong> ${profile.birthday}</p>
+                <p class="mb-2"><strong>Gender:</strong> ${profile.gender}</p>
+                <p class="mb-2"><strong>Skills:</strong> ${profile.skills}</p>
+                <p class="mb-2"><strong>Social Media:</strong> <a href="${profile.socialMedia}" target="_blank" class="text-blue-500 hover:underline">${profile.socialMedia}</a></p>
+                <a href="halaman utama.html" class="block mt-4 text-center bg-blue-500 text-white py-2 rounded hover:bg-blue-600">
+                    Kembali ke Halaman Utama
+                </a>
+            `;
+        } else {
+            profileDetailsContainer.innerHTML = `
+                <p class="text-red-500">Profil tidak ditemukan!</p>
+                <a href="halaman utama.html" class="block mt-4 text-center bg-blue-500 text-white py-2 rounded hover:bg-blue-600">
+                    Kembali ke Halaman Utama
+                </a>
+            `;
+        }
+    </script>
+</body>
+</html>
